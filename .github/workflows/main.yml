@@ -8,7 +8,7 @@ on: # Defines when the workflow will be triggered.
     # This is useful for testing or re-running the pipeline on demand.
 
 env: # Environment variables available to all jobs in this workflow.
-  AWS_REGION: "eu-north-1" # Sets the AWS region to be used for Terraform and AWS CLI commands.
+  AWS_REGION: "us-east-1" # Sets the AWS region to be used for Terraform and AWS CLI commands.
 
 jobs: # Defines a set of jobs that will be executed as part of the workflow.
   # Job to build and push Docker image (This part is cloud-agnostic)
@@ -34,7 +34,7 @@ jobs: # Defines a set of jobs that will be executed as part of the workflow.
           context: .
           file: ./nginx/Dockerfile.nginx # Specifies the path to Dockerfile for the Nginx service.
           push: true # Instructs the action to push the built image to Docker Hub.
-          tags: mohibulhasan/network-systemadmin-ca-01-web:1.0 # The Docker image name and tag to be used.
+          tags: abhi3490/network-systemadmin-ca-01-web:1.0 # The Docker image name and tag to be used.
           cache-from: type=gha # Uses GitHub Actions cache for speeding up subsequent builds.
           cache-to: type=gha,mode=max # Stores build cache to GitHub Actions cache.
 
