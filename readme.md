@@ -1,4 +1,4 @@
-# Network System Administration Project: Automated CI/CD for Dockerized Web App on AWS EC2
+# Automation Project: Automated CI/CD for Dockerized Web App on AWS EC2
 
 ## 🚀 Project Overview
 
@@ -17,29 +17,6 @@ This project demonstrates a robust and automated Continuous Integration/Continuo
 
 Our project is organized to keep things clean and manageable. Here's a quick look at the main directories and their contents:
 
-Here is a comprehensive and detailed README.md file, updated with explanations and specifics directly from the files we provided (playbook.yml, nginx.conf, docker-compose.yml, main.yml, hosts.ini, terraform-main.tf, terraform-variables.tf, and terraform-versions.tf).
-
-This README.md is designed to be placed at the root of my GitHub repository and will serve as the primary documentation for my project.
-
-Markdown
-
-# Network System Administration Project: Automated CI/CD for Dockerized Web App on AWS EC2
-
-## 🚀 Project Overview
-
-This project demonstrates a robust and automated Continuous Integration/Continuous Deployment (CI/CD) pipeline for deploying a simple, static Nginx web application. The entire infrastructure provisioning, server configuration, and application deployment are orchestrated using a suite of modern DevOps tools, ensuring a seamless, repeatable, and efficient delivery process from code commit to a live web server on AWS EC2.
-
-**Key Technologies Used:**
-
-- **Cloud Provider:** AWS (Amazon Web Services)
-- **Infrastructure as Code (IaC):** Terraform (v1.8.0)
-- **Configuration Management & Deployment:** Ansible (v2.9+)
-- **Containerization:** Docker & Docker Compose (v3.8)
-- **CI/CD Orchestration:** GitHub Actions\* **Version Control:** Git & GitHub
-
-## 📁 Project Structure
-
-Our project is organized to keep things clean and manageable. Here's a quick look at the main directories and their contents:
 
 ```
 .
