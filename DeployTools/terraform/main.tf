@@ -12,10 +12,10 @@ resource "aws_vpc" "main" {
 }
 
 resource "aws_subnet" "public" {
-  vpc_id            = aws_vpc.main.id
-  cidr_block        = "10.0.1.0/24"
-  availability_zone = "${var.aws_region}a" # Use first AZ in the region
-  map_public_ip_on_launch = true # Automatically assign public IP to instances in this subnet
+  vpc_id                  = aws_vpc.main.id
+  cidr_block              = "10.0.1.0/24"
+  availability_zone       = "${var.aws_region}a" # Use first AZ in the region
+  map_public_ip_on_launch = true                 # Automatically assign public IP to instances in this subnet
 
   tags = {
     Name = "${var.environment}-public-subnet"
@@ -99,7 +99,7 @@ resource "tls_private_key" "ssh_key_generated" {
 
 # Data source to reference the existing EC2 Key Pair
 data "aws_key_pair" "existing_ec2_key" {
-  key_name = "my-ec2-keypair" # <--- This MUST match the exact name of existing key pair
+  key_name = "devops" # <--- This MUST match the exact name of existing key pair
 }
 #======= had issue with AWS existing key pair=====================
 # resource "aws_key_pair" "ec2_key" {
@@ -116,8 +116,8 @@ data "aws_key_pair" "existing_ec2_key" {
 # It's primarily for initial setup or local testing.
 # For CI/CD, you will capture its output and put it directly into GitHub Secrets.
 resource "local_file" "ssh_private_key_pem" {
-  content  = tls_private_key.ssh_key_generated.private_key_pem
-  filename = "${var.key_pair_name}.pem"
+  content         = tls_private_key.ssh_key_generated.private_key_pem
+  filename        = "${var.key_pair_name}.pem"
   file_permission = "0400" # Read-only for owner
 }
 
@@ -125,9 +125,9 @@ resource "local_file" "ssh_private_key_pem" {
 # AWS EC2 Instance (Virtual Machine)
 # ----------------------------------------------------
 resource "aws_instance" "web_server" {
-  ami                         = var.ami_id
-  instance_type               = var.instance_type
-  key_name                    = data.aws_key_pair.existing_ec2_key.key_name
+  ami           = var.ami_id
+  instance_type = var.instance_type
+  key_name      = data.aws_key_pair.existing_ec2_key.key_name
   # Use the existing key pair from AWS for above.
   # If you want to use the generated key, uncomment the line below and comment the above line.
   #key_name                    = aws_key_pair.ec2_key.key_name
@@ -144,11 +144,10 @@ resource "aws_instance" "web_server" {
   # For more complex setup, rely on Ansible after provisioning.
   user_data = <<-EOF
               #!/bin/bash
-              sudo yum update -y # For Amazon Linux, use apt update -y for Ubuntu
-              sudo amazon-linux-extras install docker -y # For Amazon Linux
-              # sudo apt-get update -y && sudo apt-get install -y docker.io # For Ubuntu
+              sudo apt update -y # For Amazon Linux, use apt update -y for Ubuntu
+              sudo apt-get update -y && sudo apt-get install -y docker.io # For Ubuntu
               sudo service docker start
-              sudo usermod -a -G docker ec2-user # For Amazon Linux, or 'ubuntu' for Ubuntu
+              sudo usermod -a -G docker ubuntu # For Amazon Linux, or 'ubuntu' for Ubuntu
               echo "Docker installed and user added to docker group."
               EOF
 }
@@ -156,9 +155,9 @@ resource "aws_instance" "web_server" {
 
 terraform {
   backend "s3" {
-    bucket         = "network-admin-ci-cd-bucket-1"  # <--- The actual S3 bucket name created in AWS management console
-    key            = "app-deployment/terraform.tfstate" 
-    region         = "eu-north-1"                       
-    encrypt        = true                               
+    bucket  = "network-admin-ci-cd-bucket-2" # <--- The actual S3 bucket name created in AWS management console
+    key     = "app-deployment/terraform.tfstate"
+    region  = "us-east-1"
+    encrypt = true
   }
 }
